@@ -64,15 +64,15 @@ icon = pygame.image.load('logoimage.png')
 pygame.display.set_icon(icon)
 
 # Loading player image (the egg image)
-#player_image = pygame.image.load('player_image.png')
-#player_pixel = 32
+player_image = pygame.image.load('player_image.png')
+player_pixel = 32
 
 # Initializing player coordinates
-#player_x = 800
-#player_y = 300
-#player_x_displacement = nil
-#player_y_displacement = nil
-#speed = 0.5
+player_x = 800
+player_y = 300
+player_x_displacement = nil
+player_y_displacement = nil
+speed = 0.5
 
 
 # blit means to draw an image of the player onto the screen
@@ -97,6 +97,13 @@ def map(background_map):
             if c == "w":
                 screen.blit(tile, (x * 16, y * 16))
 
+#class Player():
+    #def __init__(self, x, y, width, height, color):
+        #self.x = x
+        #self.y = y
+        #self.width = width
+        #self.height = height
+
 # Running the game screen, until player chooses to close the window
 # Game loop which stops the window from closing down. Closing the window by clicking the exit window
 running = True
@@ -106,12 +113,36 @@ while running:
     screen.fill((R, G, B))
 
     map(background_map)
-    # test_player = Player()
+
+    # An event is anything that is happening inside our game window
+    # Any kind of input control is also an event such as pressing a key
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+        # If a keystroke is pressed, check whether is right or left
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_a:
+                player_x_displacement = -speed
+            if event.key == pygame.K_d:
+                player_x_displacement = speed
+            if event.key == pygame.K_w:
+                player_y_displacement = speed
+            if event.key == pygame.K_s:
+                player_y_displacement = -speed
+
+        # To stop the movement of the egg
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_a or event.key == pygame.K_d:
+                player_x_displacement = nil
+            if event.key == pygame.K_w or event.key == pygame.K_s:
+                player_y_displacement = nil
+
     # This is for the changing of the player movement
     player_x += player_x_displacement
     player_y -= player_y_displacement
 
-    # Screen Boundaries
+    # Screen Boundaries excluding the walls
     if player_x <= nil+13:
         player_x = nil+13
     elif player_x >= (width - player_pixel - 13):
