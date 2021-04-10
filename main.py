@@ -14,21 +14,48 @@ screen = pygame.display.set_mode((width, height))
 # Initializing map
 background_map ="""
 wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-ww       ww        www w    ww     w                                    www
-ww       ww         w  w                                                 ww
+ww                 www w    ww     w                                     ww
+ww                  w  w                                                 ww
 wwwww    wwwwwww    w  w                      w      w   www  wwwwwww    ww
 wwwww    w     w       wwwwwww     w          w      w   www  w     w    ww
 ww       w             w     w     w      wwwww      wwwwwww  w     w    ww
-ww       w             w     w     w      wwwww      w     w  w           w    
+ww       w             w     w     w      wwww       w     w  w           w    
 w        w     w       w     ww   ww      www        w     w  w           w    
-w        w    ww   w   w     ww           ww       www              wwwwwww    
-ww       w   www   w   w     w           ww         www             w     w  
-wwwww    w   www   w   w              wwww           wwww    ww     w     w   
-wwwwww       www       w           wwwwww    wwwww    www    ww           w    
-wwwwwww      www       w     w    wwwwww    ww   ww    ww                 w 
-wwwwwwww     wwwwwwwwwww     w   wwwwww     ww   ww     w           wwwwwww             
+w        w    ww   w   w     ww           ww         w              wwwwwww    
+ww       w   www   w   w     w           ww          ww             w     w  
+wwwww    w   www   w   w              wwww     w      www    ww     w     w   
+wwwwww       www       w           wwwwww    wwwww     ww    ww           w    
+wwwwwww      www       w     w    wwwwww     w   w      w                 w 
+wwwwwwww     wwwwwwwwwww     w   ww  ww     ww   ww     w           wwwwwww
+w      w     w    w    w     w   ww  ww     ww   ww     w    ww     w     w   
+w      w     w    w    w     w              w     w          ww     w     w
+w                 w          w                               ww           w
+w                 w          w                               ww           w
+www  wwwwwwwww    w    wwwwwww                               ww           w
+ww    ww     w    w    w         wwwwwwwwwwwwwwwwwwwwwwww    wwwwwwww     w
+ww    ww     w    w    w         w                      w           w     w  
+w      w                         w                      w           w     w
+w      w                         w                      w           w     w
+w      w                                                                  w
+w                 w                                                       w
+w                 w                          w                            w
+w                 w                          w                            w
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww           w          wwwwwwwwwwww  wwwww
+w      w                  w      w           w          w   ww   w        w
+w      w                  w      w          www        ww    w   w        w
+w      w        www       w      w          wwww      www    w   w        w
+w              wwwww      w                 wwwww    wwww                 w
+w               www       w                 wwww      www                 w
+w                w        w      w          www        ww        w        w
+w      wwwwww         wwwww      wwwww      ww     w    w        w        w      
+w                      wwwww   www   wwwwwwww      w             www    www 
+w                                                                        ww
+w                                                                         w
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+
 """
 
+walls = background_map
 background_map = background_map.splitlines()
 
 # Setting the game's title and icon
@@ -41,11 +68,11 @@ player_image = pygame.image.load('player_image.png')
 player_pixel = 32
 
 # Initializing player coordinates
-player_x = 600
-player_y = 320
+player_x = 800
+player_y = 300
 player_x_displacement = nil
 player_y_displacement = nil
-speed = 0.1
+speed = 0.5
 
 
 # blit means to draw an image of the player onto the screen
@@ -70,6 +97,12 @@ def map(background_map):
             if c == "w":
                 screen.blit(tile, (x * 16, y * 16))
 
+#class Player():
+    #def __init__(self, x, y, width, height, color):
+        #self.x = x
+        #self.y = y
+        #self.width = width
+        #self.height = height
 
 # Running the game screen, until player chooses to close the window
 # Game loop which stops the window from closing down. Closing the window by clicking the exit window
@@ -109,17 +142,18 @@ while running:
     player_x += player_x_displacement
     player_y -= player_y_displacement
 
-    # Screen Boundaries
-    if player_x <= nil:
-        player_x = nil
-    elif player_x >= (width - player_pixel):
-        player_x = (width - player_pixel)
-    elif player_y <= nil:
-        player_y = nil
-    elif player_y >= (height - player_pixel):
-        player_y = (height - player_pixel)
+    # Screen Boundaries excluding the walls
+    if player_x <= nil+13:
+        player_x = nil+13
+    elif player_x >= (width - player_pixel - 13):
+        player_x = (width - player_pixel-13)
+    elif player_y <= 30:
+        player_y = 30
+    elif player_y >= (height - player_pixel - 16):
+        player_y = (height - player_pixel-16)
 
-    # Wall boundaries
+
+    # Wall/obstacles boundaries
 
 
     # Calling the player method
